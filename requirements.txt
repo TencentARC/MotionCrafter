@@ -1,0 +1,23 @@
+torch
+diffusers
+numpy
+matplotlib
+transformers
+accelerate
+xformers
+mediapy
+fire
+decord
+OpenEXR
+kornia
+opencv-python
+h5py
+moderngl
+piqp
+gin-config
+imageio
+wandb
+wandb-osh
+scipy
+imageio-ffmpeg
+# imageio-pyav

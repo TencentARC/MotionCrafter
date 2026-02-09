@@ -1,0 +1,60 @@
+# Dataset
+DatasetConfig.__dataset__ = 'CompositeVideoDataset'
+DatasetConfig.normalize_point_map = False
+DatasetConfig.normalize_camera_pose = True
+DatasetConfig.pointmap_to_world = True
+DatasetConfig.normalize_world_map = True
+DatasetConfig.rescale = True
+DatasetConfig.reshift = True
+DatasetConfig.paramid_padding = True
+DatasetConfig.use_transform = True
+DatasetConfig.resolution = (320, 640)
+
+CompositeVideoDataset.data_dirs = [
+    'data_normed_1/dynamic_replica_video',
+    'data_normed_1/GTA-SfM_video',
+    'data_normed_1/Kubric_video',
+    'data_normed_1/MatrixCity_video',
+    'data_normed_1/MVS-Synth_video/GTAV_720',
+    'data_normed_1/Spring_video',
+    'data_normed_1/Point_odyssey_video',
+    'data_normed_1/TartanAir_video',
+    'data_normed_1/Virtual_KITTI_2_video',
+    'data_normed_1/blinkvision_video',
+    'data_normed_1/Onmiworld_video',
+    'data_normed_1/scannetpp_video',
+    'data_normed_1/Synthia_video',
+]
+
+CompositeVideoDataset.video_length_range = (8, 8)
+CompositeVideoDataset.frame_stride_range = (1, 5)
+CompositeVideoDataset.resize = 'random'
+
+# Train
+TrainerConfig.__trainer_name__ = 'WMapVAEKLTrainer'
+TrainerConfig.vae_type = 'AutoencoderKL'
+TrainerConfig.exp_name = 'geometry_vae_train'
+TrainerConfig.conv_padding_mode = 'zeros'
+TrainerConfig.checkpointing_steps = 5000
+TrainerConfig.validation_steps = 500
+TrainerConfig.checkpoints_total_limit = 20
+TrainerConfig.report_to = 'wandb'
+TrainerConfig.max_train_steps = 40000
+TrainerConfig.gradient_checkpointing = True
+TrainerConfig.train_params = 'all'
+TrainerConfig.gradient_accumulation_steps = 1
+TrainerConfig.per_gpu_batch_size = 1
+TrainerConfig.mixed_precision = 'no'
+TrainerConfig.learning_rate = 1e-4
+TrainerConfig.num_workers = 8
+
+WMapVAEKLTrainer.lambda_identity = 0.0
+WMapVAEKLTrainer.lambda_wmap = 1.0
+WMapVAEKLTrainer.lambda_sceneflow = 0.0
+WMapVAEKLTrainer.lambda_deform_mask = 0.0
+WMapVAEKLTrainer.lambda_valid_mask = 0.0
+WMapVAEKLTrainer.lambda_l1_depth = 1.0
+WMapVAEKLTrainer.lambda_patch_l1_depth = 1.0
+WMapVAEKLTrainer.lambda_kl = 0.0
+WMapVAEKLTrainer.lambda_normal = 0.2
+WMapVAEKLTrainer.lambda_deform_normal = 0.0

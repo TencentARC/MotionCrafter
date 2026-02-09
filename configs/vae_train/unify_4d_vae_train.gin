@@ -1,0 +1,50 @@
+# Dataset
+DatasetConfig.__dataset__ = 'CompositeVideoDataset'
+DatasetConfig.normalize_point_map = False
+DatasetConfig.normalize_camera_pose = True
+DatasetConfig.pointmap_to_world = True
+DatasetConfig.normalize_world_map = True
+DatasetConfig.rescale = True
+DatasetConfig.reshift = True
+DatasetConfig.paramid_padding = True
+DatasetConfig.return_intrinsic_map = False
+DatasetConfig.use_transform = True
+DatasetConfig.resolution = (320, 640)
+
+CompositeVideoDataset.data_dirs = [
+    'data_normed_1/Virtual_KITTI_2_video',
+    'data_normed_1/Kubric_video',
+    'data_normed_1/Spring_video',
+]
+CompositeVideoDataset.video_length_range = (8, 8)
+CompositeVideoDataset.frame_stride_range = (1, 1)
+CompositeVideoDataset.resize = 'random'
+
+# Train
+TrainerConfig.__trainer_name__ = 'WMapVAEKLTrainer'
+TrainerConfig.vae_type = 'UnifyAutoencoderKL'
+TrainerConfig.pretrained_vae = 'log/geometry_vae_train/checkpoint-40000'
+TrainerConfig.exp_name = 'unify_4d_vae_train'
+TrainerConfig.checkpointing_steps = 5000
+TrainerConfig.validation_steps = 500
+TrainerConfig.checkpoints_total_limit = 20
+TrainerConfig.report_to = 'wandb'
+TrainerConfig.max_train_steps = 20000
+TrainerConfig.gradient_checkpointing = True
+TrainerConfig.train_params = 'seperate'
+TrainerConfig.gradient_accumulation_steps = 1
+TrainerConfig.per_gpu_batch_size = 1
+TrainerConfig.mixed_precision = 'no'
+TrainerConfig.learning_rate = 1e-4
+TrainerConfig.num_workers = 8
+
+WMapVAEKLTrainer.lambda_identity = 0.0
+WMapVAEKLTrainer.lambda_wmap = 0.0
+WMapVAEKLTrainer.lambda_sceneflow = 1.0
+WMapVAEKLTrainer.lambda_l1_depth = 0.0
+WMapVAEKLTrainer.lambda_patch_l1_depth = 0.0
+WMapVAEKLTrainer.lambda_valid_mask = 0.0
+WMapVAEKLTrainer.lambda_deform_mask = 0.0
+WMapVAEKLTrainer.lambda_kl = 0.0
+WMapVAEKLTrainer.lambda_normal = 0.0
+WMapVAEKLTrainer.lambda_deform_normal = 0.0

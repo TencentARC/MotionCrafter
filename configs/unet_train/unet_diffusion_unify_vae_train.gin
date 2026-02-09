@@ -1,0 +1,65 @@
+# Dataset
+DatasetConfig.__dataset__ = 'CompositeVideoDataset'
+DatasetConfig.normalize_point_map = False
+DatasetConfig.normalize_camera_pose = True
+DatasetConfig.pointmap_to_world = True
+DatasetConfig.normalize_world_map = True
+DatasetConfig.rescale = True
+DatasetConfig.reshift = True
+DatasetConfig.paramid_padding = True
+DatasetConfig.return_intrinsic_map = False
+DatasetConfig.use_transform = True
+DatasetConfig.resolution = (320, 640)
+
+CompositeVideoDataset.data_dirs = [
+    'data_normed_1/dynamic_replica_video',
+    'data_normed_1/GTA-SfM_video',
+    'data_normed_1/Kubric_video',
+    'data_normed_1/MatrixCity_video',
+    'data_normed_1/MVS-Synth_video/GTAV_720',
+    'data_normed_1/Spring_video',
+    'data_normed_1/Point_odyssey_video',
+    'data_normed_1/TartanAir_video',
+    'data_normed_1/Virtual_KITTI_2_video',
+    'data_normed_1/blinkvision_video',
+    'data_normed_1/Onmiworld_video',
+    'data_normed_1/scannetpp_video',
+    'data_normed_1/Synthia_video',
+]
+CompositeVideoDataset.video_length_range = (25, 25)
+CompositeVideoDataset.frame_stride_range = (1, 1)
+CompositeVideoDataset.resize = 'random'
+
+
+# Train
+TrainerConfig.__trainer_name__ = 'UNetFullDeformDiffuseTrainer'
+TrainerConfig.vae_type = 'UnifyAutoencoderKL'
+TrainerConfig.pretrained_vae = 'log/unify_4d_vae_train/checkpoint-20000'
+
+TrainerConfig.unet_type = 'UNetSpatioTemporalConditionModelVid2vid'
+TrainerConfig.pretrained_unet = 'workspace/pretrained_models/stable-video-diffusion-img2vid-xt/unet'
+
+TrainerConfig.exp_name = 'unet_diffusion_unify_vae_train'
+
+TrainerConfig.checkpointing_steps = 10000
+TrainerConfig.validation_steps = 5000
+TrainerConfig.checkpoints_total_limit = 20
+TrainerConfig.report_to = 'wandb'
+TrainerConfig.max_train_steps = 40000
+TrainerConfig.gradient_checkpointing = True
+TrainerConfig.train_params = 'all'
+TrainerConfig.mixed_precision = 'fp16'
+TrainerConfig.gradient_accumulation_steps = 1
+TrainerConfig.per_gpu_batch_size = 1
+
+UNetFullDeformDiffuseTrainer.lambda_latent = 1.0
+UNetFullDeformDiffuseTrainer.lambda_wmap = 0.0
+UNetFullDeformDiffuseTrainer.lambda_valid_mask = 0.0
+UNetFullDeformDiffuseTrainer.lambda_sceneflow = 0.0
+UNetFullDeformDiffuseTrainer.lambda_deform_mask = 0.0
+UNetFullDeformDiffuseTrainer.lambda_chamfer = 0.0
+
+UNetFullDeformDiffuseTrainer.validate.height = 320
+UNetFullDeformDiffuseTrainer.validate.width = 640
+UNetFullDeformDiffuseTrainer.validate.vid_length = 8
+UNetFullDeformDiffuseTrainer.validate.test_case = 'examples/example.mp4'
