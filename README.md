@@ -25,7 +25,7 @@
 
 
 <div align="center">
-  <a href='https://arxiv.org/abs/xxxxx'><img src='https://img.shields.io/badge/arXiv-xxxxx-b31b1b.svg'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href='https://arxiv.org/abs/2602.08961'><img src='https://img.shields.io/badge/arXiv-xxxxx-b31b1b.svg'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href='https://ruijiezhu94.github.io/MotionCrafter_Page/'><img src='https://img.shields.io/badge/Project-Page-orange'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href='https://huggingface.co/TencentARC/MotionCrafter'><img src='https://img.shields.io/badge/HuggingFace-Weights-yellow'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
   <a href='https://github.com/TencentARC/MotionCrafter/blob/main/LICENSE.txt'><img src='https://img.shields.io/badge/License-Tencent-green'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -153,7 +153,11 @@ bash scripts/launch.sh configs/unet_train/unet_diffusion_unify_vae_train.gin
 If you find our work useful, please cite:
 
 ```bibtex
-@inproceedings{
+@article{zhu2025motioncrafter,
+  title={MotionCrafter: Dense Geometry and Motion Reconstruction with a 4D VAE},
+  author={Zhu, Ruijie and Lu, Jiahao and Hu, Wenbo and Han, Xiaoguang and Cai, Jianfei and Shan, Ying and Zheng, Chuanxia},
+  journal={arXiv preprint arXiv:2602.08961},
+  year={2026}
 }
 ```
 
