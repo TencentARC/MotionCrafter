@@ -1,6 +1,4 @@
-# World Map VAE-KL Trainer Module
-# Trains VAE for encoding/decoding point maps and scene flow
-# with multi-task loss including depth, normal, and geometric losses
+"""Trainer for world-map VAE-KL with point-map and scene-flow reconstruction losses."""
 
 from typing import Dict
 import os

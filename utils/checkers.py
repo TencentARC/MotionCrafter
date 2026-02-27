@@ -1,17 +1,10 @@
-# Tensor Validation Utilities
-# Provides functions to check for NaN and Inf values in tensors
+"""Utility helpers for NaN/Inf validation in tensors and arrays."""
 
 import torch
 import numpy as np
 
 def check_isnan(tensor, tensor_name, *args):
-    # Check if tensor contains NaN or Inf values
-    # Args:
-    #   tensor: Tensor to check (torch.Tensor or np.ndarray)
-    #   tensor_name: Name of tensor for error reporting
-    #   *args: Additional arguments to print if NaN/Inf detected
-    # Raises:
-    #   NotImplementedError: If tensor type is not supported
+    """Print diagnostics when a tensor/array contains NaN or Inf values."""
     if isinstance(tensor, torch.Tensor):
         # Check PyTorch tensor for NaN values
         if torch.isnan(tensor).any().item():

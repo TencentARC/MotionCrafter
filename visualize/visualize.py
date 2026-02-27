@@ -75,13 +75,7 @@ def main(
 
     if args.data_path.endswith(".hdf5"):
         with h5py.File(args.data_path, "r") as file:
-            # print("Data keys:", list(file.keys()))
-
             point_maps = file["point_map"][:]  # (t, h, w, 3)
-            # print(
-            #     "max depth:", point_maps[..., 2].max(),
-            #     "min depth:", point_maps[..., 2].min()
-            # )
 
             try:
                 valid_masks = file["valid_mask"][:]
@@ -108,7 +102,6 @@ def main(
         data = np.load(args.data_path)
 
         point_maps = data["point_map"]
-        # print(point_maps.shape)
 
         valid_masks = data.get("valid_mask", np.ones_like(point_maps[..., 0]).astype(bool))
         try:
@@ -244,8 +237,6 @@ def main(
             interpolation=cv2.INTER_AREA,
         )
 
-        # print("camera pose", camera_pose)
-
         if scene_flows is not None:
             scene_flow = np.float32(scene_flows[i]) * scale
             new_point_map = point_map + scene_flow
@@ -328,8 +319,6 @@ def main(
                     line_width=gui_line_size.value,
                 )
             )
-
-            # print(color.max())
             color = (color.astype(np.float32) * 0.6).astype(np.uint8)
 
             # Add deformed point cloud

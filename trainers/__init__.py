@@ -1,5 +1,4 @@
-# Trainer Configuration and Factory
-# Provides trainers for different model types with unified configuration management
+"""Trainer registry and configuration dataclass for MotionCrafter training pipelines."""
 
 from dataclasses import dataclass
 from pathlib import Path

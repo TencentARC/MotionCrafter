@@ -1,3 +1,5 @@
+"""Geometry and camera projection helpers for point/depth map processing."""
+
 from typing import *
 
 import torch

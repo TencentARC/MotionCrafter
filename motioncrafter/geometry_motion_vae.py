@@ -1,5 +1,4 @@
-# Geometry Motion VAE Module
-# Provides unified autoencoder for encoding/decoding point maps and scene flow
+"""Unified geometry-motion VAE for point-map and scene-flow latent modeling."""
 
 from typing import Dict, Tuple, Union, Optional
 

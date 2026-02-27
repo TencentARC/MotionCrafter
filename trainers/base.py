@@ -1,6 +1,4 @@
-# Base Trainer Module
-# Provides abstract base class for training motion generation models
-# with distributed training support and checkpoint management
+"""Base trainer implementation with distributed setup, logging, and checkpointing."""
 
 import logging
 from dataclasses import dataclass
