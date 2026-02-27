@@ -9,6 +9,9 @@ mediapy
 fire
 decord
 OpenEXR
+Pillow
+pandas
+pytorch3d
 kornia
 opencv-python
 h5py

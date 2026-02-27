@@ -1,3 +1,5 @@
+"""Data augmentation and geometric transform utilities for video-based training."""
+
 import random
 from typing import Tuple, Union, Optional, List, Any, Dict
 

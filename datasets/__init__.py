@@ -1,3 +1,5 @@
+"""Dataset factory and composite dataset definitions for MotionCrafter training."""
+
 from dataclasses import dataclass
 from typing import Tuple, List
 import gin

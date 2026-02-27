@@ -1,0 +1,10 @@
+Third-party components used by MotionCrafter remain under their respective licenses.
+
+This repository depends on open-source Python packages listed in requirements.txt
+(including but not limited to PyTorch, Diffusers, Transformers, Accelerate,
+OpenEXR, OpenCV, SciPy, and others). Please review and comply with each package's
+license terms when using, modifying, or redistributing this project.
+
+Some preprocess scripts require additional optional packages (for example,
+PyTorch3D and Pandas). See datasets/preprocess/README.md for dataset-specific
+dependency notes.
