@@ -1,4 +1,4 @@
-# Preprocess Scripts (Open-source Usage)
+# Preprocess Scripts
 
 This folder contains dataset-specific scripts that convert raw datasets to MotionCrafter training format:
 - video clips: `*_rgb.mp4`

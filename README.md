@@ -29,6 +29,7 @@
   <a href='https://ruijiezhu94.github.io/MotionCrafter_Page/'><img src='https://img.shields.io/badge/Project-Page-orange'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href='https://huggingface.co/TencentARC/MotionCrafter'><img src='https://img.shields.io/badge/HuggingFace-Weights-yellow'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
   <a href='https://github.com/TencentARC/MotionCrafter/blob/main/LICENSE.txt'><img src='https://img.shields.io/badge/License-Tencent-green'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href='https://youtu.be/oc0fRoZTyk8'><img src='https://img.shields.io/badge/YouTube-Video-00bcd4?logo=youtube&logoColor=white'></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href='https://ruijiezhu94.github.io/MotionCrafter'><img src="https://visitor-badge.laobi.icu/badge?page_id=ruijiezhu94.motioncrafter"/></a>
   <br>
   <br>
@@ -102,7 +103,7 @@ python visualize/visualize.py \
 
 ## 🌟 Training Your Own Model
 ### Dataset Preparation
-To train MotionCrafter, you should download the training datasets following [DATASET.md](DATASET.md).
+To train MotionCrafter, you should download the training datasets following [DATASET.md](DATASET.md) and process the data following [datasets/preprocess/README.md](datasets/preprocess/README.md).
 
 Or you can prepare your own data like this:
 

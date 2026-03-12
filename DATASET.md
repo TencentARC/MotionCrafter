@@ -65,5 +65,5 @@ High-resolution indoor real-world 3D reconstruction dataset.
 ## 📝 Notes
 - The datasets above provide **raw data**. To reproduce the training pipeline, run the preprocessing script to convert them into the `data_normed_1/...` structure.  
 - Several datasets are large (100–500K frames); please ensure sufficient storage.
-- Open-source preprocessing usage and unified script configuration are documented in `datasets/preprocess/README.md`.
+- Open-source preprocessing usage and unified script configuration are documented in [datasets/preprocess/README.md](datasets/preprocess/README.md).
 
