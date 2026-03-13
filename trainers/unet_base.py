@@ -550,11 +550,9 @@ class UNetFullDeformBaseTrainer(BaseTrainer, ABC):
                 latent_deform = self.geometry_motion_vae.encode_2(sflow_[i : i + chunk_size]).mode()
                 latent = torch.cat([latent, latent_deform], dim=1)
             elif self.config.vae_type == "UnifyAutoencoderKL":
-                latent = self.geometry_motion_vae.encode(
-                    pmap_[i : i + chunk_size],
-                    sflow_[i : i + chunk_size],
-                    vmask_[i : i + chunk_size],
-                ).mode()
+                latent = self.geometry_motion_vae.encode(pmap_[i : i + chunk_size]).mode()
+                latent_deform = self.geometry_motion_vae.encode_2(sflow_[i : i + chunk_size]).mode()
+                latent = torch.cat([latent, latent_deform], dim=1)
             assert isinstance(latent, torch.Tensor)
             latents.append(latent)
             
