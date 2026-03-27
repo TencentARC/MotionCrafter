@@ -44,7 +44,7 @@
 > We introduce MotionCrafter, the first video diffusion-based framework that jointly reconstructs 4D geometry and estimates dense object motion. Given a monocular video as input, MotionCrafter simultaneously predicts dense point map and scene flow for each frame within a shared world coordinate system, without requiring any post-optimization.
 
 
-If you find MotionCrafter useful, **please help ⭐ this repo**, which is important to Open-Source projects. Thanks!
+If you find MotionCrafter useful, **please help ⭐ this repo**, which is important for open-source projects. Thanks!
 
 ## 🚀 Quick Start
 
@@ -77,13 +77,15 @@ python run.py \
   --cache_dir workspace/pretrained_models \
   --unet_path path/to/your/unet \
   --vae_path path/to/your/vae \
-  --model_type determ \ # determ or diff
+  --model_type determ \
   --height 320 --width 640 \
   --adjust_resolution True \
   --num_frames 25
 ```
 
-### Visualization
+`--model_type` can be `determ` or `diff`.
+
+### 🧭 Visualization
 
 Visualize the predicted point maps & scene flows with `Viser`
 
@@ -92,6 +94,26 @@ python visualize/visualize.py \
   --video_path examples/video.mp4 \
   --data_path examples_output/video.npz
 ```
+
+## 📊 Evaluation
+
+We provide a complete evaluation pipeline under [evaluation](evaluation), including:
+
+- Metric definitions: [evaluation/metrics.py](evaluation/metrics.py)
+- Single-dataset evaluator: [evaluation/eval.py](evaluation/eval.py)
+- Dataset preprocess scripts: [evaluation/preprocess](evaluation/preprocess)
+
+Run evaluation with world-space predictions:
+
+```bash
+python evaluation/eval.py \
+  --gt_data_dir workspace/benchmark_datasets/Virtual_KITTI_2_video \
+  --pred_data_dir workspace/benchmark_outputs/MotionCrafter/Virtual_KITTI_2_video \
+  --use_normed_data \
+  --is_pred_world_map
+```
+
+For detailed data conventions, preprocess commands, and output format, please refer to [evaluation/README.md](evaluation/README.md).
 
 <!-- ## 🤖 Gradio Demo
 
@@ -115,7 +137,7 @@ DATASET_NAME
 ├── SCENE_NAME_2
 │   ├── xxxx.hdf5
 │   ├── xxxx.mp4
-└── mete_infos.txt
+└── meta_infos.txt
 ``` 
 
 `xxxx.mp4` is the processed video, `xxxx.hdf5` is the processed annotations, including:

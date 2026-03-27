@@ -1,0 +1,7 @@
+Video.data_dir = "workspace/benchmark_datasets/Virtual_KITTI_2_video"
+Video.use_norm_data = True
+
+
+TrainerConfig.eval_dataset = "vkitti2"
+TrainerConfig.height = 320
+TrainerConfig.width = 640

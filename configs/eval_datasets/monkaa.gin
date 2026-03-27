@@ -1,0 +1,5 @@
+Video.data_dir = "workspace/benchmark_datasets/Monkaa_video"
+TrainerConfig.eval_dataset = "monkaa"
+TrainerConfig.height = 512
+TrainerConfig.width = 960
+Video.use_norm_data = False

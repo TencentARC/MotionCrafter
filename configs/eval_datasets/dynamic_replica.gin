@@ -1,0 +1,6 @@
+Video.data_dir = "workspace/benchmark_datasets/dynamic_replica_video"
+Video.use_norm_data = True
+
+TrainerConfig.eval_dataset = "dynamic_replica"
+TrainerConfig.height = 320
+TrainerConfig.width = 640

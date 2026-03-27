@@ -1,0 +1,6 @@
+Video.data_dir = "workspace/benchmark_datasets/Spring_video"
+Video.use_norm_data = True
+
+TrainerConfig.eval_dataset = "spring"
+TrainerConfig.height = 320
+TrainerConfig.width = 640

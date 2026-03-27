@@ -1,0 +1,6 @@
+Video.data_dir = "workspace/benchmark_datasets/Kubric_video"
+Video.use_norm_data = True
+
+TrainerConfig.eval_dataset = "kubric"
+TrainerConfig.height = 320
+TrainerConfig.width = 640

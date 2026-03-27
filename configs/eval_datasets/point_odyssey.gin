@@ -1,0 +1,6 @@
+Video.data_dir = "workspace/benchmark_datasets/Point_odyssey_video"
+Video.use_norm_data = True
+
+TrainerConfig.eval_dataset = "point_odyssey"
+TrainerConfig.height = 320
+TrainerConfig.width = 640

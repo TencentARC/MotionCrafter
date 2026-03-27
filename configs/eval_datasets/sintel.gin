@@ -1,0 +1,7 @@
+Video.data_dir = "workspace/benchmark_datasets/Sintel_video"
+TrainerConfig.eval_dataset = "sintel"
+DatasetConfig.resolution = (436, 872)
+Video.crop = 'center'
+TrainerConfig.height = 448
+TrainerConfig.width = 896
+Video.use_norm_data = False
