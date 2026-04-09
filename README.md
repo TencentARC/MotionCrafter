@@ -20,7 +20,7 @@
   <sup>4</sup> CUHK(SZ) </span>
   <sup>5</sup> Monash University </span>
   <br>
-  <b>CVPR 2026</b>
+  <b>CVPR 2026 Highlight🔥</b>
 </p>
 
 
