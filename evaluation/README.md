@@ -27,6 +27,16 @@ For each sample, the evaluator expects:
    - `filename_list.txt` (default)
    - `meta_infos.txt` when using `--use_normed_data`
 
+## Benchmark Splits (Reference Only)
+
+The uploaded file `evaluation/benchmark_datasets_splits.zip` is provided only for reference and comparison.
+
+- It contains split list files under `benchmark_datasets_lists/<dataset_name>/`.
+- It is **not** directly consumed by `evaluation/eval.py`.
+- The evaluator still reads metadata from `--gt_data_dir`:
+   - `filename_list.txt` by default
+   - `meta_infos.txt` when `--use_normed_data` is enabled
+
 ## Single Dataset Evaluation
 
 ```bash
