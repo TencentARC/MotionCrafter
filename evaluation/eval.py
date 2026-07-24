@@ -103,6 +103,36 @@ def to_world(point_map: torch.Tensor, pose_c2w: torch.Tensor, device: torch.devi
     return point_map_world.reshape(t, h, w, 3)
 
 
+def scene_flow_to_world(
+    scene_flow_cso: torch.Tensor,
+    pose_c2w: torch.Tensor,
+    point_map_cam: torch.Tensor,
+    device: torch.device,
+) -> torch.Tensor:
+    """Convert camera-space endpoint offsets to first-camera world-space flow.
+
+    The stored flow convention is
+        scene_flow_cso[t] = P[t+1]^{C[t+1]} - P[t]^{C[t]}.
+    Consequently, point_map_cam[t] + scene_flow_cso[t] is the corresponding
+    endpoint expressed in the next camera coordinate system.
+
+    Returns T-1 forward-flow maps; the input's final placeholder flow is omitted.
+    """
+    if not (
+        scene_flow_cso.shape[0] == pose_c2w.shape[0] == point_map_cam.shape[0]
+    ):
+        raise ValueError(
+            "Frame number mismatch for GT scene-flow conversion: "
+            f"flow={scene_flow_cso.shape[0]}, pose={pose_c2w.shape[0]}, "
+            f"point_map={point_map_cam.shape[0]}"
+        )
+
+    current_world = to_world(point_map_cam[:-1], pose_c2w[:-1], device=device)
+    endpoint_cam_next = point_map_cam[:-1] + scene_flow_cso[:-1]
+    endpoint_world = to_world(endpoint_cam_next, pose_c2w[1:], device=device)
+    return endpoint_world - current_world
+
+
 def resize_to_match(pred: torch.Tensor, target_hw) -> torch.Tensor:
     # Resize in CHW for interpolation, then return to HWC convention.
     if pred.shape[1:3] == target_hw:
@@ -154,7 +184,7 @@ def eval_single(pred_path, gt_path, vggt_pose_path, args, device):
         gt_sflow = file["scene_flow"][:].astype(np.float32) if "scene_flow" in file else None
         gt_dmask = file["deform_mask"][:].astype(np.bool_) if "deform_mask" in file else None
 
-    # Historical protocol: evaluate 25 frames for geometry-only and 8 for flow.
+    # Use separate frame caps for geometry-only and scene-flow evaluation.
     if gt_sflow is None or pred_sflow is None:
         test_num_frames = min(args.max_frames_no_flow, gt_pmap.shape[0], pred_pmap.shape[0])
     else:
@@ -187,6 +217,15 @@ def eval_single(pred_path, gt_path, vggt_pose_path, args, device):
 
     aligned_sflow = None
     gt_eval_pmap = gt_pmap
+    gt_eval_sflow = None
+    if gt_sflow is not None:
+        # Convert stored camera-space GT endpoints into the evaluation world frame.
+        gt_eval_sflow = scene_flow_to_world(
+            gt_sflow,
+            gt_pose,
+            gt_pmap,
+            device=device,
+        )
 
     if args.is_pred_world_map:
         # Predicted map is already in world coordinates: only align scale/shift to GT world.
@@ -249,9 +288,9 @@ def eval_single(pred_path, gt_path, vggt_pose_path, args, device):
     d_rel_err = depth_rel_error(aligned_dmap, gt_dmap, gt_mask).item()
     d_in_percent = depth_inlier_percent(aligned_dmap, gt_dmap, gt_mask).item()
 
-    if aligned_sflow is not None and gt_sflow is not None:
+    if aligned_sflow is not None and gt_eval_sflow is not None:
         # Use T-1 valid flow pairs; the last frame has no forward target.
-        sflow = sceneflow_metrics(aligned_sflow[:-1], gt_sflow[:-1], gt_dmask[:-1])
+        sflow = sceneflow_metrics(aligned_sflow[:-1], gt_eval_sflow, gt_dmask[:-1])
         sflow_metrics_list = [m.item() for m in sflow]
     else:
         # Keep fixed output shape when flow annotations/predictions are unavailable.
@@ -283,6 +322,8 @@ def main():
     args = parse_args()
     device = resolve_device(args.device)
     print(f"[Eval] Using device: {device}")
+    scene_flow_protocol = "world_consistent"
+    print(f"[Eval] Scene-flow protocol: {scene_flow_protocol}")
 
     # Build sample table from GT metadata list.
     samples = load_samples(args.gt_data_dir, args.use_normed_data)
@@ -328,6 +369,7 @@ def main():
             "num_samples_evaluated": len(results_all),
             "num_samples_skipped": len(skipped),
             "device": str(device),
+            "scene_flow_protocol": scene_flow_protocol,
         }
     }
 

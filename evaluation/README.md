@@ -15,13 +15,30 @@ For each sample, the evaluator expects:
 1. Prediction `.npz` under prediction root:
    - `point_map`: `[T, H, W, 3]`
    - optional `scene_flow`: `[T, H, W, 3]`
+   - with `--is_pred_world_map`, both arrays are already expressed in the
+     first-camera world coordinate system
 
 2. Ground-truth `.hdf5` under GT root:
-   - `point_map`: `[T, H, W, 3]`
+   - `point_map`: `[T, H, W, 3]`, expressed in each frame's camera coordinates
    - `valid_mask`: `[T, H, W]`
    - `camera_pose`: `[T, 4, 4]` (camera-to-world)
-   - optional `scene_flow`: `[T, H, W, 3]`
+   - optional `scene_flow`: `[T, H, W, 3]`, stored as a camera-space endpoint
+     offset: `P[t+1]^{C[t+1]} - P[t]^{C[t]}`
    - optional `deform_mask`: `[T, H, W]`
+
+The default scene-flow protocol converts the stored GT endpoint into the
+first-camera world coordinate system:
+
+```text
+F[t]^W =
+    T[t+1]^(C->W) (P[t]^C + F[t]^CSO)
+    - T[t]^(C->W) P[t]^C
+```
+
+World-space predictions are not transformed by camera poses again; only their
+global alignment scale is applied. The stored camera-space GT endpoints are
+converted to the same world coordinate system before scene-flow metrics are
+computed.
 
 3. Metadata file under GT root:
    - `filename_list.txt` (default)
@@ -54,7 +71,6 @@ python evaluation/eval.py \
 - `--save_aligned_world`: Save aligned world-space predictions as `*_aligned_world.npz`.
 - `--static_pose_for_flow`: Use same pose for flow transform (useful for some datasets).
 - `--max_frames_no_flow` / `--max_frames_with_flow`: Frame caps for evaluation.
-
 
 ## Dataset Preprocess
 
